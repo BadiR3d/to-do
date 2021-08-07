@@ -6,7 +6,7 @@ const auth = async function (req, res, next) {
     console.log('in auth middleware')
     
     const token = req.header("authorization").replace('Bearer ', '')
-    const decoded = jwt.verify(token, 'thisisanewsession')
+    const decoded = jwt.verify(token, 'iuyrdfgjghgvybn5r6t77y')
 
     const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
 

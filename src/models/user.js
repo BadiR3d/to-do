@@ -10,6 +10,21 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  surname: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  title: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  birthday: {
+    type: Date,
+    required: true,
+    trim: true,
+  },
   email: {
     type: String,
     required: true,

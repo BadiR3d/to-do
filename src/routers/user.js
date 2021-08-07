@@ -1,9 +1,10 @@
 const express = require('express')
-const User = require("../models/user");
+const User = require("../models/user")
 const router = new express.Router()
 const auth = require('../middleware/auth')
 const multer = require("multer")
 const sharp = require("sharp")
+const e = require('express')
 
 router.post("/signup", async (req, res) => {
   const user = new User(req.body);
@@ -13,25 +14,29 @@ router.post("/signup", async (req, res) => {
     const token = await user.generateToken()
     res.send({ user, token })
   } catch(e) {
-    res.status(400).send(e);
+      console.log(e)
+      res.status(400).send(e);
   } 
 });
 
 router.post('/login', async (req, res) => {
   const email = req.body.email
   const password = req.body.password
+  console.log(email, password)
 
   try {
     const user = await User.findByCredentials(email, password)
     const token = await user.generateToken()
 
     if (!user) {
+      console.log(e)
       res.status(400).send(e)
     }
 
     res.send({ user, token })
   } catch(e) {
-    res.status(400).send(e)
+      console.log(e)
+      res.status(400).send(e)
   }
 })
 
@@ -57,6 +62,17 @@ router.post('/logout-all', auth, async (req, res) => {
 
     res.send({success: 'User logged out of all devices succesfully.'})
   } catch(e) {
+    res.status(500).send(e)
+  }
+})
+
+router.get("/users", auth,  async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.json(users);
+    console.log("in users")
+  } catch (err) {
+    console.log("in users e: ", e)
     res.status(500).send(e)
   }
 })
