@@ -1,0 +1,4 @@
+[submodule "dist"]
+	path = dist
+	url = https://github.com/BadiR3d/users-to-do-frontend
+	branch = production
