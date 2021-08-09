@@ -14,8 +14,8 @@ router.post("/signup", async (req, res) => {
     const token = await user.generateToken()
     res.send({ user, token })
   } catch(e) {
-      console.log(e)
-      res.status(400).send(e);
+    console.log(e)
+    res.status(400).send(e);
   } 
 });
 
@@ -30,7 +30,8 @@ router.post('/login', async (req, res) => {
 
     if (!user) {
       console.log(e)
-      res.status(400).send(e)
+      // res.status(400).send(e)
+      return res.status(400).send({ error: 'You have provided invalid credentials. Please try again with valid credentials'})
     }
 
     res.send({ user, token })
@@ -83,7 +84,7 @@ router.get("/users/me", auth,  async (req, res) => {
 
 router.patch("/users/me/update", auth, async (req, res) => {
   const updates = Object.keys(req.body)
-  const allowedUpdates = ['name', 'email', 'password', 'age']
+  const allowedUpdates = ['name', 'email', 'password', 'surname', 'birthday', 'title']
   const isValidOperation = updates.every((item) => allowedUpdates.includes(item))
   
   if (!isValidOperation) {
